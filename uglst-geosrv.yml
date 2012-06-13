@@ -1,0 +1,30 @@
+project_name: uglst-geosrv
+project_root: ~/projects/uglst-geosrv
+socket_name: uglst-geosrv
+rvm: ruby-1.9.3-perf@uglst-geosrv
+pre:
+  - "pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start | :"
+  - "redis-server /usr/local/etc/redis.conf | : &"
+tabs:
+  - editor:
+      layout: main-vertical
+      panes:
+        - vim
+        #- bundle exec guard -g rspec -c
+        -
+        #- bundle exec guard -g jasmine -c
+  - consoles:
+      layout: main-vertical
+      panes:
+        - bundle exec rails c
+        #- bundle exec rails db
+  - server:
+      layout: main-vertical
+      panes:
+        - bundle exec rails server thin -p3000
+        - tail -f log/development.log
+  #- worker: bundle exec rake environment resque:work QUEUE=*
+  #- clock: bundle exec clockwork app/clock.rb
+  #- guard: bundle exec guard -g frontend
+  #- capistrano:
+  #- server: ssh pierwszy
