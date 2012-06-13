@@ -5,6 +5,7 @@ gem 'rails', '3.2.5'
 gem 'rails-api'
 
 gem 'pg'
+gem 'activerecord-postgres-hstore'
 
 gem 'jbuilder'
 
