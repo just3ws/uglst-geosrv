@@ -20,6 +20,7 @@ group :test, :development do
   gem 'pry-nav'
 end
 
+# used for the IP geolocation integration
 gem 'geocoder'
 gem "hiredis"
 gem "redis", :require => ["redis", "redis/connection/hiredis"]
