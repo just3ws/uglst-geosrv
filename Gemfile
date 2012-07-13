@@ -5,12 +5,12 @@ gem 'rails', '3.2.5'
 gem 'rails-api'
 
 gem 'pg'
-gem 'activerecord-postgres-hstore'
 
 gem 'jbuilder'
 
+gem 'heroku'
+
 gem 'thin'
-gem 'foreman'
 
 gem 'newrelic_rpm'
 
@@ -21,6 +21,7 @@ group :test, :development do
 end
 
 # used for the IP geolocation integration
+gem 'geoip'
 gem 'geocoder'
 gem "hiredis"
 gem "redis", require: ["redis", "redis/connection/hiredis"]
