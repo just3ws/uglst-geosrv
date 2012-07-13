@@ -1,1 +1,2 @@
 reference https://github.com/ciaranlee/geoip_sinatra
+add CORS support ala dtsrv
