@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe GeoController do
-
   describe "GET 'index'" do
     it "returns http success" do
       get 'index'

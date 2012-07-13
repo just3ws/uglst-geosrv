@@ -1,9 +1,4 @@
 UglstGeosrv::Application.routes.draw do
-  get "geo/index"
-
-  get "geo/location"
-
-  get "geo/locateme"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -54,7 +49,7 @@ UglstGeosrv::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'geo#index'
+  root :to => 'geo#location'
 
   # See how all your routes lay out with "rake routes"
 
