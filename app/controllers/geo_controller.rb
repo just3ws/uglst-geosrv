@@ -5,16 +5,17 @@ class GeoController < ApplicationController
   end
 
   def location
-    @geo = lookup((params['ip'] || params[:ip]) || request.ip)
+
+    @geo = lookup_by_ip(params[:ip] || request.ip)
 
     render 'location', formats: 'json'
   end
 
   private
 
-  def lookup(ip)
+  def lookup_by_ip(ip)
     if ip
-      GEOIP.city(ip) || {}
+      GEOIP.city(ip) || {ip: ip}
     else
       {message: "You didn't supply an IP to geocode."}
     end.to_hash.symbolize_keys
