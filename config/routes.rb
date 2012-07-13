@@ -1,4 +1,10 @@
 UglstGeosrv::Application.routes.draw do
+  get "geo/index"
+
+  get "geo/location"
+
+  get "geo/locateme"
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
