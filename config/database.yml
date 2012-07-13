@@ -16,7 +16,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: uglst-geosrv_development
-  pool: 5
+  pool: 16
   username: uglst-geosrv
   password:
 
@@ -42,7 +42,7 @@ test:
   adapter: postgresql
   encoding: unicode
   database: uglst-geosrv_test
-  pool: 5
+  pool: 16
   username: uglst-geosrv
   password:
 
@@ -50,6 +50,6 @@ production:
   adapter: postgresql
   encoding: unicode
   database: uglst-geosrv_production
-  pool: 5
+  pool: 16
   username: uglst-geosrv
   password:
