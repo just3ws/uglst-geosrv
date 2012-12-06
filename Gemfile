@@ -8,9 +8,7 @@ gem 'pg'
 
 gem 'jbuilder'
 
-gem 'heroku'
-
-gem 'thin'
+gem 'thin', require: false
 
 gem 'newrelic_rpm'
 

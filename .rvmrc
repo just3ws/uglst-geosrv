@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-environment_id="1.9.3-turbo@uglst-geosrv"
+environment_id="1.9.2-perf@uglst-geosrv"
 
 # These are more for JRuby, which I sometimes test under.
 chmod +x ${rvm_path}/hooks/after_use_jruby_opts
