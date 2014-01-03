@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+ruby '2.0.0'
+
 gem 'rails', '~> 3.2'
 
 gem 'rails-api'
@@ -8,7 +10,7 @@ gem 'pg'
 
 gem 'jbuilder'
 
-gem 'thin', require: false
+gem 'puma'
 
 gem 'newrelic_rpm'
 
