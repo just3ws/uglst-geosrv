@@ -1,10 +1,10 @@
 require 'metrics_hash'
 
 class ApplicationController < ActionController::Base
-  protect_from_forgery
+  protect_from_forgery with: :null_session
 
-  after_filter :set_access_control_headers
-  around_filter :log_metrics
+  after_action :set_access_control_headers
+  around_action :log_metrics
 
   private
 
