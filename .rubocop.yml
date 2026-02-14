@@ -1,0 +1,44 @@
+plugins:
+  - rubocop-rails
+
+AllCops:
+  TargetRubyVersion: 2.7
+  NewCops: disable
+  SuggestExtensions: false
+  UseCache: false
+  Include:
+    - 'app/controllers/geo_controller.rb'
+    - 'config/initializers/geoip.rb'
+    - 'lib/geoip_client.rb'
+    - 'spec/lib/**/*.rb'
+    - 'spec/requests/**/*.rb'
+    - 'spec/routing/**/*.rb'
+    - 'spec/support/**/*.rb'
+  Exclude:
+    - 'Rakefile'
+    - 'script/**/*'
+
+Layout/LineLength:
+  Max: 120
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Rails/FilePath:
+  Enabled: false

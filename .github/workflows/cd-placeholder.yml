@@ -1,0 +1,51 @@
+name: CD Placeholder
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - 'v*'
+
+concurrency:
+  group: cd-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.8
+          bundler-cache: true
+
+      - name: Fetch pinned ruby-advisory-db
+        uses: actions/checkout@v4
+        with:
+          repository: rubysec/ruby-advisory-db
+          ref: 1ede1c0e19a6fc7fdb7e63e2abcca0ad864260c5
+          path: vendor/ruby-advisory-db
+
+      - name: Validate before packaging
+        run: bin/ci
+
+      - name: Build source artifact
+        run: |
+          set -euo pipefail
+          ARTIFACT_NAME="uglst-geosrv-${GITHUB_SHA}.tar.gz"
+          git archive --format=tar.gz --output "$ARTIFACT_NAME" HEAD
+          shasum -a 256 "$ARTIFACT_NAME" > "$ARTIFACT_NAME.sha256"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-bundle-${{ github.sha }}
+          path: |
+            uglst-geosrv-${{ github.sha }}.tar.gz
+            uglst-geosrv-${{ github.sha }}.tar.gz.sha256
+          if-no-files-found: error
