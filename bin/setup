@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ADVISORY_DB_DIR="$ROOT_DIR/vendor/ruby-advisory-db"
+ADVISORY_DB_COMMIT="1ede1c0e19a6fc7fdb7e63e2abcca0ad864260c5"
+
+cd "$ROOT_DIR"
+
+bundle install
+
+if [[ ! -d "$ADVISORY_DB_DIR/.git" ]]; then
+  git clone https://github.com/rubysec/ruby-advisory-db.git "$ADVISORY_DB_DIR"
+fi
+
+git -C "$ADVISORY_DB_DIR" fetch --quiet origin
+git -C "$ADVISORY_DB_DIR" checkout --quiet "$ADVISORY_DB_COMMIT"
+
+if [[ ! -f "$ROOT_DIR/data/GeoLiteCity.dat" ]]; then
+  echo "Missing GeoIP database: data/GeoLiteCity.dat" >&2
+  exit 1
+fi
+
+echo "Setup complete."
+echo "Run:"
+echo "  bin/ci"
+echo "  bundle exec rails server"

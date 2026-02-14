@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+ADVISORY_DB_DIR="$ROOT_DIR/vendor/ruby-advisory-db"
+
+cd "$ROOT_DIR"
+
+export XDG_CACHE_HOME="$ROOT_DIR/tmp/cache"
+export RUBOCOP_CACHE_ROOT="$ROOT_DIR/tmp/rubocop_cache"
+mkdir -p "$XDG_CACHE_HOME"
+mkdir -p "$RUBOCOP_CACHE_ROOT"
+
+ruby -rbundler/setup -e 'require "rubocop"; exit RuboCop::CLI.new.run([])'
+ruby -rbundler/setup -e 'load Gem.bin_path("brakeman", "brakeman")' -- -q -n -w2 -i config/brakeman.ignore
+
+if [[ ! -d "$ADVISORY_DB_DIR" ]]; then
+  echo "Missing advisory DB at $ADVISORY_DB_DIR. Run bin/setup first." >&2
+  exit 1
+fi
+
+ruby -rbundler/setup -e 'load Gem.bin_path("bundler-audit", "bundle-audit")' -- check --no-update --database "$ADVISORY_DB_DIR" --config .bundler-audit.yml
