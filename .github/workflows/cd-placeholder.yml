@@ -24,8 +24,15 @@ jobs:
           ruby-version: 2.7.8
           bundler-cache: true
 
-      - name: Run tests before packaging
-        run: bundle exec rspec
+      - name: Fetch pinned ruby-advisory-db
+        uses: actions/checkout@v4
+        with:
+          repository: rubysec/ruby-advisory-db
+          ref: 1ede1c0e19a6fc7fdb7e63e2abcca0ad864260c5
+          path: vendor/ruby-advisory-db
+
+      - name: Validate before packaging
+        run: bin/ci
 
       - name: Build source artifact
         run: |

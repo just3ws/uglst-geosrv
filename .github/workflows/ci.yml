@@ -27,5 +27,60 @@ jobs:
       - name: Run test suite
         run: bundle exec rspec
 
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.8
+          bundler-cache: true
+
+      - name: Run RuboCop
+        run: bundle exec ruby -e 'require "rubocop"; exit RuboCop::CLI.new.run([])'
+
+  security:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.8
+          bundler-cache: true
+
+      - name: Fetch pinned ruby-advisory-db
+        uses: actions/checkout@v4
+        with:
+          repository: rubysec/ruby-advisory-db
+          ref: 1ede1c0e19a6fc7fdb7e63e2abcca0ad864260c5
+          path: vendor/ruby-advisory-db
+
+      - name: Run Brakeman
+        run: bundle exec brakeman -q -n -w2 -i config/brakeman.ignore
+
+      - name: Run bundler-audit
+        run: bundle exec bundle-audit check --no-update --database vendor/ruby-advisory-db --config .bundler-audit.yml
+
+  boot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.8
+          bundler-cache: true
+
       - name: Verify app boots
         run: bundle exec rails runner 'puts :ok'
